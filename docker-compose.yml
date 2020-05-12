@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  postgresdb:
+    image: postgres:alpine
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: lds
+    volumes:
+    - postgresdb:/var/lib/postgresql/data
+    - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
+
+  lds:
+    image: statisticsnorway/lds-server:latest
+    ports:
+    - 9090:9090
+    volumes:
+    - ./gsim-raml-schema/graphqlschemas:/graphqlschemas
+    environment:
+    - LDS_persistence.provider=postgres
+    - LDS_postgres.driver.host=postgresdb
+    - LDS_postgres.driver.port:5432
+    - LDS_postgres.driver.user=lds
+    - LDS_postgres.driver.password=lds
+    - LDS_postgres.driver.database=lds
+    - LDS_txlog.rawdata.provider=discard
+    - LDS_graphql.enabled=true
+    - LDS_graphql.schema=/graphqlschemas/schema.graphql
+
+volumes:
+  postgresdb:
