@@ -8,4 +8,5 @@ if [ ! -d "gsim-raml-schema/graphqlschemas" ]; then
   docker run -v "$1"/gsim-raml-schema:/raml-project statisticsnorway/raml-to-graphql-schema:latest
 fi
 
-docker-compose up
+docker pull statisticsnorway/lds-server:latest
+docker-compose up -d
