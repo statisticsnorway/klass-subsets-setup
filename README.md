@@ -17,13 +17,13 @@ Either way, run the scripts from an elevated ("run as administrator") bash promp
 - Download/clone this project
 
 ### Windows, no Chocolatey
-1. Download `jq-win64.exe` from here https://stedolan.github.io/jq/download/ and put it inside this project folder.
-2. Run the script called `run.sh <PATH>` where you replace <PATH> with the full path to and including the project folder. This will start LDS and Postgres. Wait for the services to be up and running.
-3. Run the script `import_jq-win64.sh` (NOT `import.sh`) in order to put example classification subsets into LDS/Postgres.
+- Download `jq-win64.exe` from here https://stedolan.github.io/jq/download/ and put it inside this project folder.
 
 ### Everyone else
-1. install `jq` using your package manager. Windows: `chocolatey install jq` OS X: `brew install jq`, Debian/Ubuntu: `sudo apt-get install jq`.
+- install `jq` using your package manager. Windows: `chocolatey install jq` OS X: `brew install jq`, Debian/Ubuntu: `sudo apt-get install jq`.
+
+### Then:
 2. Run the script `run.sh <PATH>` where you replace `<PATH>` with the full path to _and including_ the project folder. This will start LDS and Postgres. Wait for the services to be up and running before doing the next step.
-3. Run the script `import.sh` (NOT `import_jq-win64.sh`) in order to put example classification subsets into LDS/Postgres.
+3. Run the script `import.sh` in order to put example classification subsets into LDS/Postgres.
 
 
