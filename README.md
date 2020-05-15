@@ -4,7 +4,7 @@ This repository helps set up Linked Data Storage (LDS) locally using PostgreSQL 
 
 Example ClassificationSubsets are added to the LDS instance during the setup, and stay there even after LDS and Postgres services are stopped and restarted.
 
-If the images are not deleted from docker, this setup only needs to be run once.
+If the containers and volumes are not deleted from docker, this setup only needs to be run once.
 
 There are two ways of setting this up. 
 1. One way for if you have a Windows 64 machine and you do not have Chocolatey (the windows package manager) installed
