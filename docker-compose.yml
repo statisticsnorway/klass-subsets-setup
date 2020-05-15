@@ -4,29 +4,41 @@ services:
   postgresdb:
     image: postgres:alpine
     ports:
-    - 5432:5432
+      - 5432:5432
     environment:
-      POSTGRES_PASSWORD: lds
+      POSTGRES_PASSWORD: postgres
     volumes:
-    - postgresdb:/var/lib/postgresql/data
-    - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgresdb:/var/lib/postgresql/data
+      - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
 
   lds:
-    image: statisticsnorway/lds-server:latest
+    image: statisticsnorway/lds-server:1.0.0
     ports:
-    - 9090:9090
+      - 9090:9090
     volumes:
-    - ./gsim-raml-schema/graphqlschemas:/graphqlschemas
+      - ./gsim-raml-schema/graphqlschemas:/graphqlschemas
     environment:
-    - LDS_persistence.provider=postgres
-    - LDS_postgres.driver.host=postgresdb
-    - LDS_postgres.driver.port:5432
-    - LDS_postgres.driver.user=lds
-    - LDS_postgres.driver.password=lds
-    - LDS_postgres.driver.database=lds
-    - LDS_txlog.rawdata.provider=discard
-    - LDS_graphql.enabled=true
-    - LDS_graphql.schema=/graphqlschemas/schema.graphql
+      - JAVA_MODULE_SYSTEM_ENABLED=true
+      - LDS_persistence.provider=postgres
+      - LDS_postgres.driver.host=postgresdb
+      - LDS_postgres.driver.port:5432
+      - LDS_postgres.driver.user=lds
+      - LDS_postgres.driver.password=lds
+      - LDS_postgres.driver.database=lds
+      - LDS_saga.number-of-logs=5
+      - LDS_sagalog.provider=no.ssb.sagalog.postgres.PostgresSagaLogInitializer
+      - LDS_sagalog.config.cluster.owner=developer
+      - LDS_sagalog.config.cluster.name=localstack
+      - LDS_sagalog.config.cluster.instance-id=01
+      - LDS_sagalog.config.postgres.driver.host=postgresdb
+      - LDS_sagalog.config.postgres.driver.port=5432
+      - LDS_sagalog.config.postgres.driver.user=sagalog
+      - LDS_sagalog.config.postgres.driver.password=sagalog
+      - LDS_sagalog.config.postgres.driver.database=sagalog
+      - LDS_sagalog.config.connection-pool.max-size=10
+      - LDS_txlog.rawdata.provider=discard
+      - LDS_graphql.enabled=true
+      - LDS_graphql.schema=/graphqlschemas/schema.graphql
 
 volumes:
   postgresdb:
