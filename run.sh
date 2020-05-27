@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+docker-compose down
+
 if [ ! -d "gsim-raml-schema" ]; then
   git clone https://github.com/statisticsnorway/gsim-raml-schema.git
 fi
