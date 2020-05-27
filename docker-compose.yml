@@ -18,7 +18,7 @@ services:
     volumes:
       - ./gsim-raml-schema/graphqlschemas:/graphqlschemas
     environment:
-      - JAVA_MODULE_SYSTEM_ENABLED=true
+      - JAVA_MODULE_SYSTEM_ENABLED=false
       - LDS_persistence.provider=postgres
       - LDS_postgres.driver.host=postgresdb
       - LDS_postgres.driver.port:5432
