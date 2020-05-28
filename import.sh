@@ -14,7 +14,7 @@ fi
 for i in $(find examples -type f); do
   ENTITY=$(echo "$i" | sed 's:examples/::' | sed 's:\([^_]*\).*:\1:')
   ID=$("$jqv" -r .id "$i")
-  curl -X PUT http://localhost:9090/ns/"${ENTITY}"/"${ID}" -d "@$i" -H "Content-Type: application/json"
+  curl -X POST http://localhost:9090/ns/"${ENTITY}"/"${ID}" -d "@$i" -H "Content-Type: application/json"
 done
 
 wait

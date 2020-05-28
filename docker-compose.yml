@@ -12,13 +12,13 @@ services:
       - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
 
   lds:
-    image: statisticsnorway/lds-server:1.0.0
+    image: statisticsnorway/lds-server:latest
     ports:
       - 9090:9090
     volumes:
       - ./gsim-raml-schema/graphqlschemas:/graphqlschemas
     environment:
-      - JAVA_MODULE_SYSTEM_ENABLED=true
+      - JAVA_MODULE_SYSTEM_ENABLED=false
       - LDS_persistence.provider=postgres
       - LDS_postgres.driver.host=postgresdb
       - LDS_postgres.driver.port:5432
