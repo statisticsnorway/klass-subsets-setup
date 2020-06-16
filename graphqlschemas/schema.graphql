@@ -2,44 +2,6 @@ directive @domain on OBJECT
 
 directive @link on FIELD_DEFINITION
 
-#Unit of thought differentiated by characteristics.
-interface Concept {
-  #Link to national concepts catalog
-  nationalConceptsCatalogURI: String
-  subjectFields: [SubjectField] @link
-}
-
-#An organized collection of data.
-interface DataSet {
-  #The date on which data is effective or valid.
-  dataExistsFromDate: DateTime
-  #The date on which data is no longer effective or valid.
-  dataExistsUntilDate: DateTime
-  #The type of "steady state" for the dataset.
-  dataSetState: DataSetStateType!
-  #The path (API endpoint, URI, catalog, ..) to the raw dataset.
-  dataSourcePath: String
-  #The path (API endpoint, URI, catalog, ..) to the metadata describing the raw dataset.
-  metadataSourcePath: String
-  #Dataset temporality
-  temporalityType: TemporalityType
-  #Classification of the value or damage potential of a dataset
-  valuation: ValuationType
-}
-
-#Defines the structure of an organized collection of data (Data Set).
-interface DataStructure {
-}
-
-#A means of exchanging data.
-interface ExchangeChannel {
-  consumesInformationSets: [consumesInformationSets] @link
-  #Direction of the exchange channel
-  direction: DirectionType!
-  producesInformationSets: [producesInformationSets] @link
-  protocol: Protocol! @link
-}
-
 #IdentifiableArtefact is reusable abstract object (type). All identifiable objects inherits all attributes from this object (type).
 interface IdentifiableArtefact {
   #Administrative details (e.g. default language, documentation, localID, ...).
@@ -76,12 +38,6 @@ interface IdentifiableArtefact {
   versionValidFrom: DateTime!
 }
 
-#An abstract notion that is any organized collection of information.
-interface InformationResource {
-  owner: owner! @link
-  parentResource: DataResource @link
-}
-
 #Any instance of an information object which is supplied to a Process Step Instance at the time its execution is initiated.
 interface ProcessInput {
 }
@@ -96,13 +52,6 @@ interface StatisticalNeed {
   dateCreated: DateTime
   #Statistical need status
   statisticalNeedStatus: Boolean!
-}
-
-#The permitted range of values for a characteristic of a variable
-interface ValueDomain {
-  #The data type for a value domain
-  dataType: DataType!
-  measurementUnit: MeasurementUnit @link
 }
 
 #Information about the model
