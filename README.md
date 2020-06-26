@@ -23,7 +23,8 @@ Either way, run the scripts from an elevated ("run as administrator") bash promp
 - install `jq` using your package manager. Windows: `chocolatey install jq` OS X: `brew install jq`, Debian/Ubuntu: `sudo apt-get install jq`.
 
 ### Then:
-2. Run the script `run.sh <PATH>` where you replace `<PATH>` with the full path to _and including_ the project folder. This will start LDS and Postgres. Wait for the services to be up and running before doing the next step.
-3. Run the script `import.sh` in order to put example classification subsets into LDS/Postgres.
+2. Start Docker Desktop 
+3. Run the script `run.sh <PATH>` where you replace `<PATH>` with the full path to _and including_ the project folder. This will start LDS and Postgres. Wait for the services to be up and running before doing the next step.
+4. Run the script `import.sh` in order to put example classification subsets into LDS/Postgres.
 
 
