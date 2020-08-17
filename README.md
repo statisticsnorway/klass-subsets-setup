@@ -24,7 +24,5 @@ Either way, run the scripts from an elevated ("run as administrator") bash promp
 
 ### Then:
 2. Start Docker Desktop 
-3. Run the script `run.sh <PATH>` where you replace `<PATH>` with the full path to _and including_ the project folder. This will start LDS and Postgres. Wait for the services to be up and running before doing the next step.
+3. Run the script `run.sh <PATH>` where you replace `<PATH>` with the full path to _and including_ the klass-subsets-setup project folder (For example, using GIT Bash on Windows run the script like this `./run.sh $(pwd -W)`). The path to the working directory is passed manually because it is important that the path is formated correctly for your specific OS. This step will start the LDS and Postgres instances. Wait for the services to be up and running before doing the next step.
 4. Run the script `import.sh` in order to put example classification subsets into LDS/Postgres.
-
-
