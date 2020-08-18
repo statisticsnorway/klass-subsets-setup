@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  postgresdb:
+    image: olved/pg-for-lds:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+
+  lds:
+    image: olved/lds-with-graphql:latest
+    ports:
+      - 9090:9090
+    environment:
+      - JAVA_MODULE_SYSTEM_ENABLED=false
+      - LDS_persistence.provider=postgres
+      - LDS_postgres.driver.host=postgresdb
+      - LDS_postgres.driver.port:5432
+      - LDS_postgres.driver.user=lds
+      - LDS_postgres.driver.password=lds
+      - LDS_postgres.driver.database=lds
+      - LDS_saga.number-of-logs=5
+      - LDS_sagalog.provider=no.ssb.sagalog.postgres.PostgresSagaLogInitializer
+      - LDS_sagalog.config.cluster.owner=developer
+      - LDS_sagalog.config.cluster.name=localstack
+      - LDS_sagalog.config.cluster.instance-id=01
+      - LDS_sagalog.config.postgres.driver.host=postgresdb
+      - LDS_sagalog.config.postgres.driver.port=5432
+      - LDS_sagalog.config.postgres.driver.user=sagalog
+      - LDS_sagalog.config.postgres.driver.password=sagalog
+      - LDS_sagalog.config.postgres.driver.database=sagalog
+      - LDS_sagalog.config.connection-pool.max-size=10
+      - LDS_txlog.rawdata.provider=discard
+      - LDS_graphql.enabled=true
+      - LDS_graphql.schema=/graphqlschemas/schema.graphql
+
+volumes:
+  postgresdb:
