@@ -9,14 +9,14 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgresdb:/var/lib/postgresql/data
-      - ./init-db-and-user.sql:/docker-entrypoint-initdb.d/init.sql
+      - ${SQL_INIT_PATH}:/docker-entrypoint-initdb.d/init.sql
 
   lds:
     image: statisticsnorway/lds-server:1.0.9
     ports:
       - 9090:9090
     volumes:
-      - ./graphqlschemas:/graphqlschemas
+      - ${SCHEMA_PATH}:/graphqlschemas
     environment:
       - JAVA_MODULE_SYSTEM_ENABLED=false
       - LDS_persistence.provider=postgres

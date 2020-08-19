@@ -1,0 +1,3 @@
+FROM statisticsnorway/lds-server:1.0.9
+
+COPY graphqlschemas /graphqlschemas
