@@ -2,18 +2,21 @@ version: '3.7'
 
 services:
   postgresdb:
-    image: olved/pg-for-lds:latest
+    image: postgres:alpine
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgresdb:/var/lib/postgresql/data
+      - ${SQL_INIT_PATH}:/docker-entrypoint-initdb.d/init.sql
 
   lds:
-    image: olved/lds-with-graphql:latest
+    image: statisticsnorway/lds-server:1.0.9
     ports:
       - 9090:9090
+    volumes:
+      - ${SCHEMA_PATH}:/graphqlschemas
     environment:
       - JAVA_MODULE_SYSTEM_ENABLED=false
       - LDS_persistence.provider=postgres
