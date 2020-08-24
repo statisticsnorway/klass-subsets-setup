@@ -16,7 +16,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ${SCHEMA_PATH}:/graphqlschemas
+      - ${SCHEMA_PATH}:/graphqlschemas/schema.graphql
     environment:
       - JAVA_MODULE_SYSTEM_ENABLED=false
       - LDS_persistence.provider=postgres
