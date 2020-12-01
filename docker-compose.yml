@@ -39,6 +39,7 @@ services:
       - LDS_txlog.rawdata.provider=discard
       - LDS_graphql.enabled=true
       - LDS_graphql.schema=/graphqlschemas/schema.graphql
+      - LDS_graphql.search.enabled=false
 
 volumes:
   postgresdb:
