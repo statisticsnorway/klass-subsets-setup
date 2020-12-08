@@ -200,7 +200,7 @@ type ClassificationSubsetSeries @domain {
   #What kind of classification family does this subset belong to
   classificationFamily: String!
 
-  #List of each version of the classification subsets
+  #List of each version of the classification subset
   versions: [ClassificationSubsetVersion]! @link
 
   ## THESE FIELDS ARE UNIQUE TO Subsets, AND ARE NOT GIVEN BY KLASS API
@@ -215,7 +215,7 @@ type ClassificationSubsetSeries @domain {
   id: String!
 
   #Administrative details (e.g. default language, documentation, localID, ...).
-  administrativeDetails: [AdministrativeDetails!]
+  administrativeDetails: [AdministrativeDetails!]!
 
   #The date on which the information object was created
   createdDate: Date!
@@ -238,15 +238,15 @@ type ClassificationSubsetCode {
   classificationId: String!
   # The ID (often a number) of the code in the KLASS classification
   code: String!
-  # The name of the code at the time it was saved
-  name: String!
   # The level of this code in the classification
   level: String!
+  # The name of the code
+  name: String!
   # The rank of this code in this subset version's code list
   rank: String!
-  # The versionUIDs of the classification versions this code is present in within the validInRange
+  # URL of the classification version this code comes from 
   classificationVersions: [String!]!
-  # The validFrom date of the classification version this code is taken from
+  # The validFrom of the version this code comes from 
   validFromInRequestedRange: Date!
   validToInRequestedRange: Date
 }
@@ -261,6 +261,9 @@ type ClassificationSubsetVersion @domain {
   validUntil: Date
 
   lastModified: DateTime!
+
+  #Information about contact person
+  contactPerson: ContactInfo
 
   #Last updated by.
   lastModifiedBy: ContactInfo
@@ -280,16 +283,14 @@ type ClassificationSubsetVersion @domain {
   #The date on which the information object was created
   createdDate: Date!
 
-  #UID of this subset version.
-  version: String!
+  #Formal versioning of the information object. Should be unique within this ClassificationSubsetSeries 
+  versionId: String!
 
-  #UID of the subset series this version belongs to
+  # The GUID of the ClassificationSubsetSeries this version belongs to
   subsetId: String!
 
   #The reason for making this version of the information object.
   versionRationale: [MultilingualText!]!
-
-  _links: LinksObject
 }
 
 #A reusable type for supporting multilingual texts.
@@ -320,14 +321,6 @@ type RankedUrnDetails {
   rank: Int!
   #An URN
   urn: String!
-}
-
-type LinksObject {
-  self: Href
-}
-
-type Href {
-  href: String
 }
 
 #The responsible function involved in the statistical Business Process.
