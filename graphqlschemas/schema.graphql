@@ -2,6 +2,10 @@ directive @domain on OBJECT
 
 directive @link on FIELD_DEFINITION
 
+#Dummy abstract type
+interface Domain {
+}
+
 #IdentifiableArtefact is reusable abstract object (type). All identifiable objects inherits all attributes from this object (type).
 interface IdentifiableArtefact {
   #Administrative details (e.g. default language, documentation, localID, ...).
@@ -40,13 +44,13 @@ interface IdentifiableArtefact {
 
 #Information about the model
 type About {
-  #This version deprecates object ClassificationSubset and add new objects ClassificationSubsetVersion and ClassificationSubsetSeries
+  #This version changed and removed attributes in objects DataSet and Population. New attribute temporalityType added in InstanceVariable.
   model_version: String!
 }
 
 #A generic and expandable key-value-store for adding present and future AdministrativeDetails-attributes to any information object.
 type AdministrativeDetails {
-  #The type (key) of the AdministrativeDetails-attribute.
+  #The type (key) of the AdministrativeDetails-attribute
   administrativeDetailType: AdministrativeDetailType!
   #One or more values (a list) for this administrativeDetailType.
   values: [String!]!
@@ -141,156 +145,100 @@ type AgentInRole implements IdentifiableArtefact @domain {
   versionValidFrom: DateTime!
 }
 
-#A subset of classifications. Deprecated, replaced by ClassificationSubsetVersion
-type ClassificationSubset implements IdentifiableArtefact @domain {
-  #Administrative details (e.g. default language, documentation, localID, ...).
-  administrativeDetails: [AdministrativeDetails!]
-  #Indicator for access to an item.
-  administrativeStatus: AdministrativeStatusType
-  #Agent(s) acting in the Role(s) for this information object.
-  agentInRoles: [AgentInRole] @link
-  #List of urns to classification subsets
-  codes: [RankedUrnDetails!]!
-  #Information object created by.
-  createdBy: String!
-  #The date on which the information object was created
-  createdDate: DateTime!
-  #The description of the information object
-  description: [MultilingualText!]
-  #The global unique identifier (GUID) of the information object assigned by the owner agency.
-  id: String!
-  #Last updated by.
-  lastUpdatedBy: String
-  #The date on which the object was last updated.
-  lastUpdatedDate: DateTime
-  #A term which designates a concept, in this case an information object. The identifying name will be the preferred designation. There will be many terms to designate the same information object, such as synonyms and terms in other languages.
-  name: [MultilingualText!]!
-  #A short technical name. (Avoid special characters not supported as variable names in common programming languages).
-  shortName: String
-  #The date on which the information object is effective or valid. Set this date only once (constant). The same date for all versions of this information object.
-  validFrom: DateTime!
-  #The date on which the information object is no longer effective or valid.
-  validUntil: DateTime
-  #Formal versioning of the information object. The version designator of the information object assigned by the owner agency. "major.minor.patch", e.g. "1.12.5".
-  version: String
-  #The reason for making this version of the information object.
-  versionRationale: [MultilingualText!]
-  #The date on which the current version of the infomation object is effective or valid.
-  versionValidFrom: DateTime!
-}
-
-#A subset of classifications
-type ClassificationSubsetSeries @domain {
-
-  #What kind of classification is this? Always Subset
-  classificationType: String
-
-  #The date on which the object was last updated.
-  lastModified: DateTime!
-
-  #Information about contact person
-  contactPerson: ContactInfo
-
-  #Information object created by.
-  owningSection: String!
-
-  #The overarching categories of things described by these codes
-  statisticalUnits: [String]
-
-  #What kind of classification family does this subset belong to
-  classificationFamily: String!
-
-  #List of each version of the classification subset
-  versions: [ClassificationSubsetVersion]! @link
-
-  ## THESE FIELDS ARE UNIQUE TO Subsets, AND ARE NOT GIVEN BY KLASS API
-
-  #Last updated by.
-  lastModifiedBy: ContactInfo
-
-  #A short technical name. (Avoid special characters not supported as variable names in common programming languages).
-  shortName: String
-
-  #The global unique identifier (GUID) of the information object assigned by the owner agency.
-  id: String!
-
-  #Administrative details (e.g. default language, documentation, localID, ...).
-  administrativeDetails: [AdministrativeDetails!]!
-
-  #The date on which the information object was created
-  createdDate: Date!
-
-  #The description of the information object
-  description: [MultilingualText!]!
-
-  #A term which designates a concept, in this case an information object. The identifying name will be the preferred designation. There will be many terms to designate the same information object, such as synonyms and terms in other languages.
-  name: [MultilingualText!]!
-}
-
-type ContactInfo {
-  name: String!
-  email: String!
-  phone: String!
-}
-
+#A code reference in a subset of classifications
 type ClassificationSubsetCode {
-  # The ID of the KLASS classification this code is taken from
+  #An id to a classification or code list
   classificationId: String!
-  # The ID (often a number) of the code in the KLASS classification
-  code: String!
-  # The level of this code in the classification
-  level: String!
-  # The name of the code
-  name: String!
-  # The rank of this code in this subset version's code list
-  rank: String!
-  # URL of the classification version this code comes from 
+  #Links to the classification versions that contain the code in the given validity period
   classificationVersions: [String!]!
-  # The validFrom of the version this code comes from 
+  #The ID (often a number) of the code in the KLASS classification
+  code: String!
+  #level of code in classification
+  level: String!
+  #The name of the code at the time it was saved
+  name: String!
+  #Position in the list
+  rank: Int!
+  #The validFrom date of the classification version this code is taken from
   validFromInRequestedRange: Date!
+  #The validTo date of the classification version this code is taken from
   validToInRequestedRange: Date
 }
 
 #A subset of classifications
-type ClassificationSubsetVersion @domain {
-
-  #Which date the version starts being valid at
-  validFrom: Date!
-
-  #Optional validUntil for closed subsets
-  validUntil: Date
-
-  lastModified: DateTime!
-
-  #Information about contact person
-  contactPerson: ContactInfo
-
-  #Last updated by.
-  lastModifiedBy: ContactInfo
-
-  #The overarching categories of things described by these codes
-  statisticalUnits: [String]
-
+type ClassificationSubsetSeries implements Domain @domain {
   #Administrative details (e.g. default language, documentation, localID, ...).
   administrativeDetails: [AdministrativeDetails!]
-
-  #Indicator for access to an item.
-  administrativeStatus: AdministrativeStatusType
-
-  #List of urns pointing to specific codes from KLASS classifications
-  codes: [ClassificationSubsetCode]
-
+  #What kind of classificaiton family does this subset belong to
+  classificationFamily: String!
+  #What kind of classificaiton this is (Always Subset if present)
+  classificationType: String
+  #Contact info to the person responsible for this subset
+  contactPerson: [AgentDetails!]
   #The date on which the information object was created
   createdDate: Date!
-
-  #Formal versioning of the information object. Should be unique within this ClassificationSubsetSeries 
-  versionId: String!
-
-  # The GUID of the ClassificationSubsetSeries this version belongs to
-  subsetId: String!
-
+  #The description of the information object
+  description: [MultilingualText!]
+  #The global unique identifier (GUID) of the information object assigned by the owner agency.
+  id: String!
+  #The date on which the object was last updated.
+  lastModified: DateTime!
+  #Last modified by
+  lastModifiedBy: [AgentDetails!]
+  #A term which designates a concept, in this case an information object. The identifying name will be the preferred designation. There will be many terms to designate the same information object, such as synonyms and terms in other languages.
+  name: [MultilingualText!]!
+  #Statistics Norway Division responsible for the subset updates.
+  owningSection: String!
+  #A short technical name (Avoid special characters not supported as variable names in common programming languages).
+  shortName: String
+  #Statistical unit references a subset tagged with.
+  statisticalUnits: [String!]
   #The reason for making this version of the information object.
-  versionRationale: [MultilingualText!]!
+  versionRationale: [MultilingualText!]
+  #Versions of the classification code set for different validity periods.
+  versions: [ClassificationSubsetVersion]! @link
+}
+
+#A subset of classifications
+type ClassificationSubsetVersion implements Domain @domain {
+  #Administrative details (e.g. default language, documentation, localID, ...).
+  administrativeDetails: [AdministrativeDetails!]
+  #Indicator for access to an item.
+  administrativeStatus: AdministrativeStatusType!
+  #A list of references to classification items
+  codes: [ClassificationSubsetCode!]!
+  #The date on which the information object was created
+  createdDate: Date!
+  #The description of the information object
+  description: [MultilingualText!]
+  #The date time on which the object was last updated.
+  lastModified: DateTime!
+  #Last modified by
+  lastModifiedBy: [AgentDetails!]
+  #A short technical name. (Avoid special characters not supported as variable names in common programming languages).
+  shortName: String
+  #Statistical unit references a subset tagged with.
+  statisticalUnits: [String!]
+  #The global unique identifier (GUID) of the subset series this version belongs to
+  subsetId: String!
+  #The date on which the information object is effective or valid. Set this date only once (constant). The same date for all versions of this information object.
+  validFrom: Date!
+  #The date on which the information object is no longer effective or valid.
+  validUntil: Date
+  #unique id of this version of this subset
+  versionId: String!
+  #The reason for making this version of the information object.
+  versionRationale: [MultilingualText!]
+}
+
+#Contact information for a person
+type ContactInformation {
+  #the email adress of the person
+  email: String!
+  #the full name of the person
+  name: String!
+  #phone number of the person
+  phone: String!
 }
 
 #A reusable type for supporting multilingual texts.
@@ -307,20 +255,12 @@ type Query {
   AgentById: [Agent]
   AgentDetailsById: [AgentDetails]
   AgentInRoleById: [AgentInRole]
-  ClassificationSubsetById: [ClassificationSubset]
+  ClassificationSubsetCodeById: [ClassificationSubsetCode]
   ClassificationSubsetSeriesById: [ClassificationSubsetSeries]
   ClassificationSubsetVersionById: [ClassificationSubsetVersion]
+  ContactInformationById: [ContactInformation]
   MultilingualTextById: [MultilingualText]
-  RankedUrnDetailsById: [RankedUrnDetails]
   RoleById: [Role]
-}
-
-#An URN with rank property
-type RankedUrnDetails {
-  #Position in the list
-  rank: Int!
-  #An URN
-  urn: String!
 }
 
 #The responsible function involved in the statistical Business Process.
