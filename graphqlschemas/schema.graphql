@@ -156,7 +156,7 @@ type ClassificationSubsetCode {
   #level of code in classification
   level: String!
   #The name of the code at the time it was saved
-  name: String!
+  name: [MultilingualText!]!
   #Position in the list
   rank: Int!
   #The validFrom date of the classification version this code is taken from
