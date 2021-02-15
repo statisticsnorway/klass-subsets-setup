@@ -6,7 +6,7 @@ git clone https://github.com/statisticsnorway/klass-subsets-schema.git
 if [ ! -f "klass-subsets-schema/graphqlschemas/schema.graphql" ]; then
   cd klass-subsets-schema || exit
   ./update_dependencies.sh
-  ./generate_gql.sh "$1"
+  ./generate_gql.sh "$(pwd)"
   cd ..
 fi
 
