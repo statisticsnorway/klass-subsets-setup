@@ -1,0 +1,63 @@
+{
+  "administrativeStatus": "DRAFT",
+  "createdDate": "2021-02-15",
+  "lastModified": "2021-02-15T13:54:44Z",
+  "subsetId": "UID_for_dette_uttrekket_1",
+  "validFrom": "2020-10-19",
+  "validUntil": "2021-10-19",
+  "versionId": "3bdbd90c-6138-47d5-a30c-d0b38ad99b86",
+  "statisticalUnits": [
+    "Region"
+  ],
+  "codes": [
+    {
+      "classificationId": "131",
+      "code": "1144",
+      "level": "1",
+      "rank": "1",
+      "validFromInRequestedRange": "2020-10-19",
+      "validToInRequestedRange": "2021-10-19",
+      "classificationVersions": [
+        "https://data.ssb.no/api/klass/v1/versions/1160"
+      ],
+      "name": [
+        {
+          "languageCode": "nb",
+          "languageText": "Kvitsøy"
+        },
+        {
+          "languageCode": "nn",
+          "languageText": "Kvitsøy"
+        },
+        {
+          "languageCode": "en",
+          "languageText": "Kvitsøy"
+        }
+      ],
+      "notes": [
+        {
+          "languageCode": "nb",
+          "languageText": ""
+        },
+        {
+          "languageCode": "nn",
+          "languageText": ""
+        },
+        {
+          "languageCode": "en",
+          "languageText": ""
+        }
+      ]
+    }
+  ],
+  "versionRationale": [
+    {
+      "languageCode": "nb",
+      "languageText": "versjon rasjonale på norsk bokmål"
+    },
+    {
+      "languageCode": "en",
+      "languageText": "version rationale in english"
+    }
+  ]
+}
