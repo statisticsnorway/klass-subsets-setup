@@ -1,0 +1,42 @@
+{
+  "classificationFamily": "Some Family",
+  "classificationType": "Subset",
+  "createdDate": "2021-02-15",
+  "id": "UID_for_dette_uttrekket_1",
+  "lastModified": "2021-02-15T13:54:45Z",
+  "owningSection": "700 it",
+  "statisticalUnits": [
+    "Region"
+  ],
+  "versions": [
+    "/ClassificationSubsetVersion/UID_for_dette_uttrekket_1_3bdbd90c-6138-47d5-a30c-d0b38ad99b86"
+  ],
+  "administrativeDetails": [
+    {
+      "administrativeDetailType": "DEFAULTLANGUAGE",
+      "values": [
+        "nb"
+      ]
+    }
+  ],
+  "description": [
+    {
+      "languageCode": "nb",
+      "languageText": "tekst på norsk bokmål"
+    },
+    {
+      "languageCode": "en",
+      "languageText": "text in english"
+    }
+  ],
+  "name": [
+    {
+      "languageCode": "nb",
+      "languageText": "Uttrekk for fullt navn på norsk bokmål"
+    },
+    {
+      "languageCode": "en",
+      "languageText": "Subset for full name in english"
+    }
+  ]
+}
